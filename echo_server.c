@@ -14,8 +14,10 @@ int main (void) {
     }
     bzero (&servaddr, sizeof (servaddr));
     servaddr.sin_family = AF_INET;
-    servaddr.sin_port = htons (10000); /* echo port 7 is reserved */
-    servaddr.sin_addr.s_addr = htonl (INADDR_ANY);
+    /* host to network short (portは16byte) */
+    servaddr.sin_port = htons (10000); /* echo port 7 is reserved  */
+    /* host to network long (addressは32byte) */
+    servaddr.sin_addr.s_addr = htonl (INADDR_ANY); 
     if (bind (listenfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0) {
         perror ("bind"); exit (1);
     }
